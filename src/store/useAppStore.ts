@@ -40,6 +40,8 @@ interface AppStore {
   equipment: Equipment[];
   timeline: Record<string, TimelineItem[]>;
   checklists: Record<string, any[]>;
+  isMobileSidebarOpen: boolean;
+  setMobileSidebarOpen: (open: boolean) => void;
   login: () => void;
   logout: () => void;
   setUserRole: (role: UserRole) => void;
@@ -64,6 +66,8 @@ export const useAppStore = create<AppStore>((set) => {
     equipment: initialAssets,
     timeline: buildTimelineMap(initialTickets),
     checklists: buildChecklistsMap(initialTickets),
+    isMobileSidebarOpen: false,
+    setMobileSidebarOpen: (open) => set({ isMobileSidebarOpen: open }),
 
     login: () => {
       localStorage.setItem('cf_authenticated', 'true');

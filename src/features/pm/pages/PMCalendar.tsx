@@ -125,11 +125,11 @@ export const PMCalendar: React.FC = () => {
       />
 
       {/* Tabs Controller */}
-      <div className="bg-surface border-b border-border-custom px-6 py-3.5 flex justify-between items-center z-10 select-none">
+      <div className="bg-surface border-b border-border-custom px-4 md:px-6 py-3.5 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 sm:gap-0 z-10 select-none">
         <div className="flex bg-bg p-0.5 rounded-[8px] border border-border-custom/50">
           <button
             onClick={() => setActiveTab('calendar')}
-            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-[6px] text-[12.5px] font-semibold transition-all cursor-pointer ${activeTab === 'calendar'
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-[6px] text-[12.5px] font-semibold transition-all cursor-pointer ${activeTab === 'calendar'
                 ? 'bg-surface text-primary shadow-sm'
                 : 'text-text-secondary hover:text-text-primary'
               }`}
@@ -140,7 +140,7 @@ export const PMCalendar: React.FC = () => {
 
           <button
             onClick={() => setActiveTab('list')}
-            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-[6px] text-[12.5px] font-semibold transition-all cursor-pointer ${activeTab === 'list'
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-[6px] text-[12.5px] font-semibold transition-all cursor-pointer ${activeTab === 'list'
                 ? 'bg-surface text-primary shadow-sm'
                 : 'text-text-secondary hover:text-text-primary'
               }`}
@@ -150,7 +150,7 @@ export const PMCalendar: React.FC = () => {
           </button>
         </div>
 
-        <div className="text-[12.5px] text-text-secondary flex items-center gap-3">
+        <div className="text-[12.5px] text-text-secondary flex items-center justify-center sm:justify-start gap-3">
           <span className="flex items-center gap-1">
             <span className="w-2.5 h-2.5 rounded-full bg-info" />
             <span>{pmTasks.filter(t => t.status === 'scheduled').length} Scheduled</span>

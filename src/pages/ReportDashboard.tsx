@@ -40,7 +40,8 @@ export const ReportDashboard: React.FC = () => {
         aria-label="Export Report to PDF"
       >
         <IconDownload size={16} stroke={2} />
-        <span>Export PDF</span>
+        <span className="hidden sm:inline">Export PDF</span>
+        <span className="sm:hidden">Export</span>
       </button>
     </div>
   );
@@ -118,7 +119,7 @@ export const ReportDashboard: React.FC = () => {
           </h3>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse table-layout-fixed" style={{ tableLayout: 'fixed' }}>
+            <table className="w-full min-w-[700px] text-left border-collapse table-layout-fixed" style={{ tableLayout: 'fixed' }}>
               <thead>
                 <tr className="border-b border-border-custom/75 text-[11px] font-semibold text-text-secondary uppercase tracking-[0.5px] bg-bg/50">
                   <th className="py-3 px-4 w-[30%]">Equipment</th>

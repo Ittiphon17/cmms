@@ -142,7 +142,7 @@ export const AssetList: React.FC = () => {
       />
 
       {/* Filter and Search Bar */}
-      <div className="bg-surface border-b border-border-custom px-6 py-4 flex flex-col md:flex-row gap-4 justify-between items-center z-10 select-none">
+      <div className="bg-surface border-b border-border-custom px-4 md:px-6 py-4 flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center z-10 select-none">
         {/* Search */}
         <div className="relative w-full md:w-[280px]">
           <IconSearch size={16} className="absolute left-3 top-[11px] text-text-hint" />
@@ -156,7 +156,7 @@ export const AssetList: React.FC = () => {
         </div>
 
         {/* Filters */}
-        <div className="w-full md:w-auto flex flex-col sm:flex-row items-center gap-3">
+        <div className="w-full md:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <IconFilter size={14} className="text-text-secondary flex-shrink-0" />
             <span className="text-[12px] font-semibold text-text-secondary uppercase tracking-[0.3px]">Dept:</span>

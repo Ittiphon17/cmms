@@ -63,13 +63,13 @@ export const PMCalendarView: React.FC<PMCalendarViewProps> = ({ tasks, onSelectT
 
         {/* Days of Week Headers */}
         <div className="grid grid-cols-7 text-center border-b border-border-custom pb-2 text-[11px] font-semibold text-text-secondary uppercase tracking-[0.5px]">
-          <div>Mon</div>
-          <div>Tue</div>
-          <div>Wed</div>
-          <div>Thu</div>
-          <div>Fri</div>
-          <div>Sat</div>
-          <div>Sun</div>
+          <div><span className="hidden sm:inline">Mon</span><span className="sm:hidden">M</span></div>
+          <div><span className="hidden sm:inline">Tue</span><span className="sm:hidden">T</span></div>
+          <div><span className="hidden sm:inline">Wed</span><span className="sm:hidden">W</span></div>
+          <div><span className="hidden sm:inline">Thu</span><span className="sm:hidden">T</span></div>
+          <div><span className="hidden sm:inline">Fri</span><span className="sm:hidden">F</span></div>
+          <div><span className="hidden sm:inline">Sat</span><span className="sm:hidden">S</span></div>
+          <div><span className="hidden sm:inline">Sun</span><span className="sm:hidden">S</span></div>
         </div>
 
         {/* Calendar Days Grid */}
