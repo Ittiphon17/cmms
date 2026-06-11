@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Topbar } from '../components/layout/Topbar';
 import { PrioritySelector } from '../components/forms/PrioritySelector';
+import { AssetSelector } from '../components/forms/AssetSelector';
 import { useAppStore } from '../store/useAppStore';
 import type { TicketPriority } from '../types';
+
 
 export const CreateTicket: React.FC = () => {
   const navigate = useNavigate();
@@ -106,20 +108,12 @@ export const CreateTicket: React.FC = () => {
                 >
                   Select Asset
                 </label>
-                <select
-                  id="equipment-select"
+                <AssetSelector
+                  equipment={equipment}
+                  selectedEqId={selectedEqId}
+                  onSelectEqId={setSelectedEqId}
                   required
-                  className="w-full h-[38px] px-3 border border-border-custom rounded-[6px] text-[14px] text-text-primary bg-bg focus:outline-none focus:border-primary"
-                  value={selectedEqId}
-                  onChange={(e) => setSelectedEqId(e.target.value)}
-                >
-                  <option value="">-- Choose Equipment --</option>
-                  {equipment.map((eq) => (
-                    <option key={eq.id} value={eq.id}>
-                      {eq.name} ({eq.id})
-                    </option>
-                  ))}
-                </select>
+                />
               </div>
 
               <div>
