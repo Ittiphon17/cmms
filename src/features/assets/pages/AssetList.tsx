@@ -108,8 +108,8 @@ export const AssetList: React.FC = () => {
 
   // Filtered Equipment List
   const filteredAssets = equipment.filter((eq) => {
-    const matchesSearch = 
-      eq.name.toLowerCase().includes(search.toLowerCase()) || 
+    const matchesSearch =
+      eq.name.toLowerCase().includes(search.toLowerCase()) ||
       eq.id.toLowerCase().includes(search.toLowerCase()) ||
       eq.model.toLowerCase().includes(search.toLowerCase());
 
@@ -214,11 +214,11 @@ export const AssetList: React.FC = () => {
       {isRegisterOpen && (
         <div className="fixed inset-0 z-[100] flex justify-end">
           {/* Backdrop overlay */}
-          <div 
+          <div
             onClick={() => setIsRegisterOpen(false)}
             className="absolute inset-0 bg-[#0f172a]/40 backdrop-blur-[2px] transition-opacity duration-300"
           />
-          
+
           {/* Drawer Panel */}
           <div className="relative w-full max-w-[540px] h-full bg-surface shadow-2xl border-l border-border-custom flex flex-col z-10 animate-slide-left text-left">
             {/* Header */}
@@ -227,14 +227,14 @@ export const AssetList: React.FC = () => {
                 <h2 className="text-[16px] font-bold text-text-primary m-0">Register New Medical Asset</h2>
                 <p className="text-[12px] text-text-secondary mt-0.5 m-0">Add a medical machine to the active clinical fleet</p>
               </div>
-              <button 
+              <button
                 onClick={() => setIsRegisterOpen(false)}
                 className="p-1.5 hover:bg-bg rounded-[6px] text-text-secondary hover:text-text-primary transition-colors cursor-pointer"
               >
                 <IconX size={18} />
               </button>
             </div>
-            
+
             {/* Form */}
             <form onSubmit={handleRegisterSubmit} className="flex-1 overflow-y-auto p-6 space-y-5 bg-white">
               <div className="grid grid-cols-2 gap-4">
@@ -252,7 +252,7 @@ export const AssetList: React.FC = () => {
                     onChange={(e) => setFormName(e.target.value)}
                   />
                 </div>
-                
+
                 {/* Department */}
                 <div>
                   <label className="block text-[11px] font-semibold text-text-secondary uppercase tracking-[0.5px] mb-1.5">
@@ -269,7 +269,7 @@ export const AssetList: React.FC = () => {
                     <option value="Body Firming">Body Firming</option>
                   </select>
                 </div>
-                
+
                 {/* Asset ID */}
                 <div>
                   <label className="block text-[11px] font-semibold text-text-secondary uppercase tracking-[0.5px] mb-1.5 flex items-center justify-between">
@@ -285,7 +285,7 @@ export const AssetList: React.FC = () => {
                     onChange={(e) => setFormId(e.target.value)}
                   />
                 </div>
-                
+
                 {/* Model */}
                 <div>
                   <label className="block text-[11px] font-semibold text-text-secondary uppercase tracking-[0.5px] mb-1.5">
@@ -300,7 +300,7 @@ export const AssetList: React.FC = () => {
                     onChange={(e) => setFormModel(e.target.value)}
                   />
                 </div>
-                
+
                 {/* Manufacturer */}
                 <div>
                   <label className="block text-[11px] font-semibold text-text-secondary uppercase tracking-[0.5px] mb-1.5">
@@ -315,7 +315,7 @@ export const AssetList: React.FC = () => {
                     onChange={(e) => setFormManufacturer(e.target.value)}
                   />
                 </div>
-                
+
                 {/* Serial Number */}
                 <div>
                   <label className="block text-[11px] font-semibold text-text-secondary uppercase tracking-[0.5px] mb-1.5">
@@ -330,7 +330,7 @@ export const AssetList: React.FC = () => {
                     onChange={(e) => setFormSerial(e.target.value)}
                   />
                 </div>
-                
+
                 {/* Location */}
                 <div>
                   <label className="block text-[11px] font-semibold text-text-secondary uppercase tracking-[0.5px] mb-1.5">
@@ -345,7 +345,7 @@ export const AssetList: React.FC = () => {
                     onChange={(e) => setFormLocation(e.target.value)}
                   />
                 </div>
-                
+
                 {/* Status */}
                 <div>
                   <label className="block text-[11px] font-semibold text-text-secondary uppercase tracking-[0.5px] mb-1.5">
@@ -363,7 +363,7 @@ export const AssetList: React.FC = () => {
                     <option value="critical">Critical</option>
                   </select>
                 </div>
-                
+
                 {/* Assigned Tech */}
                 <div>
                   <label className="block text-[11px] font-semibold text-text-secondary uppercase tracking-[0.5px] mb-1.5">
@@ -382,7 +382,7 @@ export const AssetList: React.FC = () => {
                     ))}
                   </select>
                 </div>
-                
+
                 {/* Purchase Date */}
                 <div>
                   <label className="block text-[11px] font-semibold text-text-secondary uppercase tracking-[0.5px] mb-1.5">
@@ -396,7 +396,7 @@ export const AssetList: React.FC = () => {
                     onChange={(e) => setFormPurchaseDate(e.target.value)}
                   />
                 </div>
-                
+
                 {/* Last Service Date */}
                 <div>
                   <label className="block text-[11px] font-semibold text-text-secondary uppercase tracking-[0.5px] mb-1.5">
@@ -409,7 +409,7 @@ export const AssetList: React.FC = () => {
                     onChange={(e) => setFormLastService(e.target.value)}
                   />
                 </div>
-                
+
                 {/* Next Service Date */}
                 <div className="col-span-2">
                   <label className="block text-[11px] font-semibold text-text-secondary uppercase tracking-[0.5px] mb-1.5">
@@ -422,7 +422,7 @@ export const AssetList: React.FC = () => {
                     onChange={(e) => setFormNextService(e.target.value)}
                   />
                 </div>
-                
+
                 {/* Uptime (%) */}
                 <div>
                   <label className="block text-[11px] font-semibold text-text-secondary uppercase tracking-[0.5px] mb-1.5">
@@ -438,7 +438,7 @@ export const AssetList: React.FC = () => {
                     onChange={(e) => setFormUptime(e.target.value)}
                   />
                 </div>
-                
+
                 {/* Health Score */}
                 <div>
                   <label className="block text-[11px] font-semibold text-text-secondary uppercase tracking-[0.5px] mb-1.5">
@@ -454,7 +454,7 @@ export const AssetList: React.FC = () => {
                   />
                 </div>
               </div>
-              
+
               {/* Actions */}
               <div className="flex items-center justify-end gap-3 pt-6 border-t border-border-custom/60">
                 <button
