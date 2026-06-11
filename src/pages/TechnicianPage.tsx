@@ -9,7 +9,7 @@ import { IconCalendarEvent } from '@tabler/icons-react';
 
 export const TechnicianPage: React.FC = () => {
   const navigate = useNavigate();
-  const { tickets, teamMembers } = useAppStore();
+  const { tickets, teamMembers, pmTasks } = useAppStore();
 
   // Find Marcus Vance (the active technician)
   const techStats = teamMembers.find((m) => m.name === 'Marcus Vance') || {
@@ -22,10 +22,37 @@ export const TechnicianPage: React.FC = () => {
     rating: 4.8,
   };
 
-  // Get active queue for Marcus Vance
-  const activeQueue = tickets
-    .filter((t) => t.assignedTo === 'Marcus Vance' && (t.status as any) !== 'resolved' && (t.status as any) !== 'completed' && (t.status as any) !== 'closed')
-    .slice(0, 3);
+  // Get active tickets for Marcus Vance
+  const activeTickets = tickets
+    .filter((t) => t.assignedTo === 'Marcus Vance' && (t.status as any) !== 'resolved' && (t.status as any) !== 'completed' && (t.status as any) !== 'closed');
+
+  // Get active PM tasks for Marcus Vance
+  const activePMs = pmTasks
+    .filter((p) => p.assignedTech === 'Marcus Vance' && p.status !== 'completed');
+
+  // Combine them into a single list
+  const combinedQueue = [
+    ...activeTickets.map((t) => ({
+      id: t.id,
+      title: t.title,
+      equipment: t.equipment,
+      location: t.location,
+      priority: t.priority,
+      progress: t.progress,
+      isPM: false,
+      scheduledDate: t.openedAt,
+    })),
+    ...activePMs.map((p) => ({
+      id: p.id,
+      title: p.type,
+      equipment: p.assetName,
+      location: p.branch,
+      priority: p.status === 'overdue' ? 'critical' : 'normal',
+      progress: 0,
+      isPM: true,
+      scheduledDate: p.scheduledDate,
+    })),
+  ];
 
   // Get completed tickets for Marcus Vance
   const completedQueue = tickets
@@ -46,12 +73,12 @@ export const TechnicianPage: React.FC = () => {
 
   const rightActions = (
     <button
-      onClick={() => alert('Biomedical calendar schedule loaded.')}
+      onClick={() => navigate('/pm')}
       className="h-[36px] border border-border-custom hover:bg-bg text-text-primary px-3.5 py-1.5 rounded-[6px] font-semibold text-[13px] flex items-center gap-1.5 transition-colors cursor-pointer"
       aria-label="View Schedule Calendar"
     >
       <IconCalendarEvent size={16} stroke={1.8} />
-      <span>Schedule</span>
+      <span>PM Calendar</span>
     </button>
   );
 
@@ -69,7 +96,7 @@ export const TechnicianPage: React.FC = () => {
         
         {/* Metric Grid (3 columns) */}
         <section className="grid grid-cols-1 sm:grid-cols-3 gap-4" aria-label="Technician Queue Stats">
-          <MetricCard label="Active Queue" value={activeQueue.length} color="red" />
+          <MetricCard label="Active Queue" value={combinedQueue.length} color="red" />
           <MetricCard label="Completed Today" value={techStats.completedToday} color="green" />
           <MetricCard label="Avg Close Time" value={techStats.avgCloseTime} color="teal" />
         </section>
@@ -84,43 +111,66 @@ export const TechnicianPage: React.FC = () => {
             </h3>
 
             <div className="flex-1 space-y-4">
-              {activeQueue.length > 0 ? (
-                activeQueue.map((ticket) => {
-                  const borderClass = borderAccentMap[ticket.priority] || borderAccentMap.normal;
-                  const progressValue = ticket.progress || 0;
+              {combinedQueue.length > 0 ? (
+                combinedQueue.map((item) => {
+                  const borderClass = item.isPM 
+                    ? (item.priority === 'critical' ? 'border-l-[4px] border-l-critical animate-pulse' : 'border-l-[4px] border-l-primary') 
+                    : (borderAccentMap[item.priority] || borderAccentMap.normal);
                   
                   return (
                     <button
-                      key={ticket.id}
-                      onClick={() => navigate(`/tickets/${ticket.id}`)}
+                      key={item.id}
+                      onClick={() => {
+                        if (item.isPM) {
+                          navigate('/pm', { state: { selectedTaskId: item.id } });
+                        } else {
+                          navigate(`/tickets/${item.id}`);
+                        }
+                      }}
                       className={`w-full text-left bg-bg hover:bg-[#EDF4F4] transition-colors p-4 rounded-[8px] border border-border-custom/40 flex flex-col gap-3 cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 ${borderClass}`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-[12px] font-semibold text-primary bg-primary-light px-2 py-0.5 rounded-[4px] border border-primary/10">
-                          {ticket.id}
-                        </span>
-                        <span className="text-[11px] font-semibold text-text-secondary uppercase tracking-[0.3px]">
-                          {ticket.location}
+                        <div className="flex items-center gap-2">
+                          <span className="text-[12px] font-semibold text-primary bg-primary-light px-2 py-0.5 rounded-[4px] border border-primary/10">
+                            {item.id}
+                          </span>
+                          {item.isPM && (
+                            <span className="text-[10px] font-bold text-success bg-success-bg border border-success/15 px-1.5 py-0.5 rounded-[4px] uppercase tracking-[0.3px]">
+                              Preventive Maintenance
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-[11px] font-semibold text-text-secondary uppercase tracking-[0.3px] truncate max-w-[150px]">
+                          {item.location}
                         </span>
                       </div>
 
                       <h4 className="text-[14px] font-semibold text-text-primary m-0 truncate">
-                        {ticket.equipment}
+                        {item.equipment}
                       </h4>
 
-                      <div className="space-y-1.5 mt-1">
-                        <div className="flex items-center justify-between text-[12px] text-text-secondary">
-                          <span>Diagnostic Progress</span>
-                          <span className="font-semibold text-text-primary">{progressValue}%</span>
+                      {item.isPM ? (
+                        <div className="flex justify-between items-center text-[12.5px] text-text-secondary mt-1">
+                          <span className="font-semibold text-primary">{item.title}</span>
+                          <span className="text-[11px] text-text-hint">
+                            Scheduled: {new Date(item.scheduledDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                          </span>
                         </div>
-                        <ProgressBar value={progressValue} color={ticket.priority === 'critical' ? 'red' : 'teal'} />
-                      </div>
+                      ) : (
+                        <div className="space-y-1.5 mt-1">
+                          <div className="flex items-center justify-between text-[12px] text-text-secondary">
+                            <span>Diagnostic Progress</span>
+                            <span className="font-semibold text-text-primary">{item.progress}%</span>
+                          </div>
+                          <ProgressBar value={item.progress} color={item.priority === 'critical' ? 'red' : 'teal'} />
+                        </div>
+                      )}
                     </button>
                   );
                 })
               ) : (
                 <div className="text-center text-text-secondary py-10">
-                  No active tickets assigned to you today. Great work!
+                  No active tickets or PM tasks assigned to you today. Great work!
                 </div>
               )}
             </div>

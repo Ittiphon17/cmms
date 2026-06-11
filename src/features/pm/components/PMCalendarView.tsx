@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { PMTask } from './PMCard';
+import type { PMTask } from '../../../types';
 import { PMStatusBadge } from './PMStatusBadge';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 

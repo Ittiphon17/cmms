@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Ticket, TeamMember, Equipment, TimelineItem, UserRole, WorkOrder } from '../types';
+import type { Ticket, TeamMember, Equipment, TimelineItem, UserRole, WorkOrder, PMTask } from '../types';
 import { mockTeamMembers } from '../data/mock';
 import { seedMockData } from '../api/mockDataSeeder';
 
@@ -32,6 +32,10 @@ const buildTimelineMap = (tickets: Ticket[]) => {
   }, {} as Record<string, any[]>);
 };
 
+const getStoredPMTasks = (): PMTask[] => {
+  return JSON.parse(localStorage.getItem('cf_pm_tasks') || '[]');
+};
+
 interface AppStore {
   isAuthenticated: boolean;
   userRole: UserRole;
@@ -40,6 +44,7 @@ interface AppStore {
   equipment: Equipment[];
   timeline: Record<string, TimelineItem[]>;
   checklists: Record<string, any[]>;
+  pmTasks: PMTask[];
   isMobileSidebarOpen: boolean;
   setMobileSidebarOpen: (open: boolean) => void;
   login: () => void;
@@ -52,6 +57,9 @@ interface AppStore {
   toggleChecklistItem: (ticketId: string, itemId: string) => void;
   refreshFromStorage: () => void;
   addAsset: (asset: Omit<Equipment, 'workOrderCount'>) => void;
+  addPMTask: (task: Omit<PMTask, 'id' | 'status'>) => void;
+  reassignPMTask: (taskId: string, techName: string) => void;
+  completePMTask: (taskId: string, notes: string) => void;
 }
 
 export const useAppStore = create<AppStore>((set) => {
@@ -66,6 +74,7 @@ export const useAppStore = create<AppStore>((set) => {
     equipment: initialAssets,
     timeline: buildTimelineMap(initialTickets),
     checklists: buildChecklistsMap(initialTickets),
+    pmTasks: getStoredPMTasks(),
     isMobileSidebarOpen: false,
     setMobileSidebarOpen: (open) => set({ isMobileSidebarOpen: open }),
 
@@ -82,9 +91,11 @@ export const useAppStore = create<AppStore>((set) => {
     refreshFromStorage: () => {
       const tks = getStoredWorkOrders();
       const eqs = getStoredAssets();
+      const pms = getStoredPMTasks();
       set({
         tickets: tks,
         equipment: eqs,
+        pmTasks: pms,
         timeline: buildTimelineMap(tks),
         checklists: buildChecklistsMap(tks),
       });
@@ -298,6 +309,53 @@ export const useAppStore = create<AppStore>((set) => {
       localStorage.setItem('cf_assets', JSON.stringify(updatedAssets));
       return {
         equipment: updatedAssets,
+      };
+    }),
+
+    addPMTask: (newTaskData) => set((state) => {
+      const newId = `PM-${Math.floor(106 + Math.random() * 900)}`;
+      const newPm: PMTask = {
+        ...newTaskData,
+        id: newId,
+        status: 'scheduled',
+      };
+      const tasks = [...state.pmTasks, newPm];
+      localStorage.setItem('cf_pm_tasks', JSON.stringify(tasks));
+      return { pmTasks: tasks };
+    }),
+
+    reassignPMTask: (taskId, techName) => set((state) => {
+      const tasks = state.pmTasks.map((t) => t.id === taskId ? { ...t, assignedTech: techName } : t);
+      localStorage.setItem('cf_pm_tasks', JSON.stringify(tasks));
+      return { pmTasks: tasks };
+    }),
+
+    completePMTask: (taskId, notes) => set((state) => {
+      const selectedTask = state.pmTasks.find((t) => t.id === taskId);
+      if (!selectedTask) return {};
+
+      // 1. Update status locally
+      const tasks = state.pmTasks.map((t) => t.id === taskId ? { ...t, status: 'completed' as const, notes } : t);
+      localStorage.setItem('cf_pm_tasks', JSON.stringify(tasks));
+
+      // 2. Reflect in global asset registry health score
+      const assets = JSON.parse(localStorage.getItem('cf_assets') || '[]');
+      const updatedAssets = assets.map((eq: any) => {
+        if (eq.id === selectedTask.assetId) {
+          return {
+            ...eq,
+            status: 'operational',
+            healthScore: Math.min(eq.healthScore + 10, 100), // boost health score upon PM compliance check
+            lastService: new Date().toISOString().split('T')[0],
+          };
+        }
+        return eq;
+      });
+      localStorage.setItem('cf_assets', JSON.stringify(updatedAssets));
+
+      return { 
+        pmTasks: tasks,
+        equipment: updatedAssets
       };
     }),
   };

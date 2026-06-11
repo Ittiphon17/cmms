@@ -308,5 +308,67 @@ export const seedMockData = () => {
     ];
     localStorage.setItem('cf_workorders', JSON.stringify(initialWorkOrders));
   }
+
+  // 3. Seed PM Tasks
+  if (!localStorage.getItem('cf_pm_tasks')) {
+    const initialPMTasks = [
+      {
+        id: 'PM-101',
+        assetId: 'EQ-FC-002',
+        assetName: 'Ultra F (Ultra HIFU) machine',
+        type: 'Transducer Calibration',
+        status: 'scheduled',
+        scheduledDate: '2026-06-18T09:00:00Z',
+        assignedTech: 'Marcus Vance',
+        description: 'Scheduled semi-annual high-intensity ultrasound transducer calibration and coupling verification.',
+        branch: 'Siam Square Branch',
+      },
+      {
+        id: 'PM-102',
+        assetId: 'EQ-FC-003',
+        assetName: 'RF 5D machine',
+        type: 'Handpiece Verification',
+        status: 'overdue',
+        scheduledDate: '2026-06-10T10:00:00Z',
+        assignedTech: 'Elena Rostova',
+        description: 'Annual electrical safety test, RF handpiece electrode pins check, and impedance feedback testing.',
+        branch: 'Sukhumvit Branch',
+      },
+      {
+        id: 'PM-103',
+        assetId: 'EQ-SC-001',
+        assetName: 'Q-Switch Laser machine',
+        type: 'Laser Power Output Check',
+        status: 'scheduled',
+        scheduledDate: '2026-06-11T08:00:00Z',
+        assignedTech: 'Sarah Chen',
+        description: 'Scheduled Q-switch flashlamp trigger voltage test and alignment of guide beam optic path.',
+        branch: 'Ari Branch',
+      },
+      {
+        id: 'PM-104',
+        assetId: 'EQ-SC-002',
+        assetName: 'Diode Laser machine',
+        type: 'Cooling System Audit',
+        status: 'scheduled',
+        scheduledDate: '2026-06-12T14:00:00Z',
+        assignedTech: 'Elena Rostova',
+        description: 'Standard diode laser chill-tip thermoelectric cooling check and chiller water level verification.',
+        branch: 'Sukhumvit Branch',
+      },
+      {
+        id: 'PM-105',
+        assetId: 'EQ-SC-003',
+        assetName: 'Supersonic Vitamin Infusion machine',
+        type: 'Transducer Head Test',
+        status: 'completed',
+        scheduledDate: '2026-06-05T09:00:00Z',
+        assignedTech: 'Marcus Vance',
+        description: 'Perform ultrasound transducer head integrity checks, clean probe contact, and run frequency validation sweep.',
+        branch: 'Siam Square Branch',
+      },
+    ];
+    localStorage.setItem('cf_pm_tasks', JSON.stringify(initialPMTasks));
+  }
 };
 

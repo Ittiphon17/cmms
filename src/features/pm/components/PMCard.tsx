@@ -1,18 +1,8 @@
 import React from 'react';
 import { PMStatusBadge } from './PMStatusBadge';
-import type { PMStatus } from './PMStatusBadge';
 import { IconCalendar, IconUser, IconChevronRight } from '@tabler/icons-react';
 
-export interface PMTask {
-  id: string;
-  assetId: string;
-  assetName: string;
-  type: string;
-  status: PMStatus;
-  scheduledDate: string;
-  assignedTech: string;
-  description: string;
-}
+import type { PMTask } from '../../../types';
 
 interface PMCardProps {
   task: PMTask;
