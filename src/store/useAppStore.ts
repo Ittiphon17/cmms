@@ -49,6 +49,7 @@ interface AppStore {
   addTimelineNote: (ticketId: string, action: string, by: string) => void;
   toggleChecklistItem: (ticketId: string, itemId: string) => void;
   refreshFromStorage: () => void;
+  addAsset: (asset: Omit<Equipment, 'workOrderCount'>) => void;
 }
 
 export const useAppStore = create<AppStore>((set) => {
@@ -280,6 +281,19 @@ export const useAppStore = create<AppStore>((set) => {
       return {
         tickets: updatedTickets,
         checklists: buildChecklistsMap(updatedTickets),
+      };
+    }),
+
+    addAsset: (newAsset) => set(() => {
+      const assets = JSON.parse(localStorage.getItem('cf_assets') || '[]');
+      const assetWithDefaults = {
+        ...newAsset,
+        workOrderCount: 0,
+      };
+      const updatedAssets = [...assets, assetWithDefaults];
+      localStorage.setItem('cf_assets', JSON.stringify(updatedAssets));
+      return {
+        equipment: updatedAssets,
       };
     }),
   };

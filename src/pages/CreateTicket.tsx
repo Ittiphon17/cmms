@@ -28,11 +28,14 @@ export const CreateTicket: React.FC = () => {
         setAssetId(eq.id);
         // Find a matching ticket location or set general location based on name
         const locationMap: Record<string, string> = {
-          'EQ-MRI-8822': 'Imaging Center - Room 3',
-          'EQ-DEF-1049': 'Emergency Department - ER-B',
-          'EQ-VEN-5021': 'Intensive Care Unit - Bed 14',
-          'EQ-INF-3304': 'Pediatrics Ward - Room 204',
-          'EQ-MON-0284': 'Cardiac Care Unit - CCU-4',
+          'EQ-FC-001': 'Facial Care Room A',
+          'EQ-FC-002': 'Therapy Room 3',
+          'EQ-FC-003': 'VIP Treatment Suite',
+          'EQ-SC-001': 'Laser Room 1',
+          'EQ-SC-002': 'Laser Room 2',
+          'EQ-SC-003': 'Skin Treatment Bed 4',
+          'EQ-SC-004': 'Therapy Room 5',
+          'EQ-BF-001': 'Body Contouring Room B',
         };
         setLocation(locationMap[eq.id] || 'General Ward');
       }

@@ -18,53 +18,53 @@ export const PMCalendar: React.FC = () => {
   const [pmTasks, setPmTasks] = useState<PMTask[]>([
     {
       id: 'PM-101',
-      assetId: 'EQ-MRI-8822',
-      assetName: 'GE Signa 3T MRI Scanner',
-      type: 'RF Coil Calibration',
+      assetId: 'EQ-FC-002',
+      assetName: 'Ultra F (Ultra HIFU) machine',
+      type: 'Transducer Calibration',
       status: 'scheduled',
       scheduledDate: '2026-06-18T09:00:00Z',
       assignedTech: 'Marcus Vance',
-      description: 'Scheduled semi-annual radio-frequency transmit coil calibration. Verify coil tuning and signal-to-noise ratio.',
+      description: 'Scheduled semi-annual high-intensity ultrasound transducer calibration and coupling verification.',
     },
     {
       id: 'PM-102',
-      assetId: 'EQ-DEF-1049',
-      assetName: 'Philips Tempus LS Defibrillator',
-      type: 'Battery Recalibration',
-      status: 'overdue', // overdue since scheduled for June 10 and current time is June 11
+      assetId: 'EQ-FC-003',
+      assetName: 'RF 5D machine',
+      type: 'Handpiece Verification',
+      status: 'overdue',
       scheduledDate: '2026-06-10T10:00:00Z',
       assignedTech: 'Elena Rostova',
-      description: 'Annual electrical safety test, discharge calibration cycle check, and internal backup cell voltage testing.',
+      description: 'Annual electrical safety test, RF handpiece electrode pins check, and impedance feedback testing.',
     },
     {
       id: 'PM-103',
-      assetId: 'EQ-VEN-5021',
-      assetName: 'Dräger Evita V500 Ventilator',
-      type: 'O2 Sensor Replacement',
+      assetId: 'EQ-SC-001',
+      assetName: 'Q-Switch Laser machine',
+      type: 'Laser Power Output Check',
       status: 'scheduled',
       scheduledDate: '2026-06-11T08:00:00Z',
       assignedTech: 'Sarah Chen',
-      description: 'Scheduled oxygen fuel cell exchange and calibration. Run oxygen supply leakage tests.',
+      description: 'Scheduled Q-switch flashlamp trigger voltage test and alignment of guide beam optic path.',
     },
     {
       id: 'PM-104',
-      assetId: 'EQ-INF-3304',
-      assetName: 'Baxter Sigma Spectrum Infusion Pump',
-      type: 'Electrical Safety Audit',
+      assetId: 'EQ-SC-002',
+      assetName: 'Diode Laser machine',
+      type: 'Cooling System Audit',
       status: 'scheduled',
       scheduledDate: '2026-06-12T14:00:00Z',
       assignedTech: 'Elena Rostova',
-      description: 'Standard FDA compliance electrical safety inspection. Perform leakage current checks.',
+      description: 'Standard diode laser chill-tip thermoelectric cooling check and chiller water level verification.',
     },
     {
       id: 'PM-105',
-      assetId: 'EQ-MON-0284',
-      assetName: 'Mindray BeneVision Patient Monitor',
-      type: 'Software Validation',
+      assetId: 'EQ-SC-003',
+      assetName: 'Supersonic Vitamin Infusion machine',
+      type: 'Transducer Head Test',
       status: 'completed',
       scheduledDate: '2026-06-05T09:00:00Z',
       assignedTech: 'Marcus Vance',
-      description: 'Apply security patches and firmware update version 3.42. Validate networking connectivity.',
+      description: 'Perform ultrasound transducer head integrity checks, clean probe contact, and run frequency validation sweep.',
     },
   ]);
 
@@ -129,23 +129,21 @@ export const PMCalendar: React.FC = () => {
         <div className="flex bg-bg p-0.5 rounded-[8px] border border-border-custom/50">
           <button
             onClick={() => setActiveTab('calendar')}
-            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-[6px] text-[12.5px] font-semibold transition-all cursor-pointer ${
-              activeTab === 'calendar'
+            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-[6px] text-[12.5px] font-semibold transition-all cursor-pointer ${activeTab === 'calendar'
                 ? 'bg-surface text-primary shadow-sm'
                 : 'text-text-secondary hover:text-text-primary'
-            }`}
+              }`}
           >
             <IconCalendar size={15} />
             <span>Calendar Grid</span>
           </button>
-          
+
           <button
             onClick={() => setActiveTab('list')}
-            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-[6px] text-[12.5px] font-semibold transition-all cursor-pointer ${
-              activeTab === 'list'
+            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-[6px] text-[12.5px] font-semibold transition-all cursor-pointer ${activeTab === 'list'
                 ? 'bg-surface text-primary shadow-sm'
                 : 'text-text-secondary hover:text-text-primary'
-            }`}
+              }`}
           >
             <IconList size={15} />
             <span>List Agenda</span>

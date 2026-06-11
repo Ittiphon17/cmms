@@ -3,52 +3,52 @@ import type { Ticket, TeamMember, Equipment, TimelineItem } from '../types';
 export const mockTickets: Ticket[] = [
   {
     id: 'TK-2847',
-    equipment: 'GE Signa 3T MRI Scanner',
-    assetId: 'EQ-MRI-8822',
-    location: 'Imaging Center - Room 3',
+    equipment: 'Ultra F (Ultra HIFU) machine',
+    assetId: 'EQ-FC-002',
+    location: 'Therapy Room 3',
     status: 'critical',
     priority: 'critical',
     assignedTo: 'Marcus Vance',
     category: 'Hardware Failure',
     openedAt: '2026-06-10T08:30:00Z',
     slaDeadline: '2026-06-10T12:30:00Z', // Overdue SLA (before June 11, 2026)
-    description: 'Liquid helium level has dropped below critical threshold. System reporting gradient coil temperature warnings and automatic shutdown will trigger if pressure increases further.',
+    description: 'System reporting transducer crystal array overheating warnings and power fluctuations during activation. Transducer coupling gel sensor error.',
     progress: 45
   },
   {
     id: 'TK-9582',
-    equipment: 'Philips Tempus LS Defibrillator',
-    assetId: 'EQ-DEF-1049',
-    location: 'Emergency Department - ER-B',
+    equipment: 'RF 5D machine',
+    assetId: 'EQ-FC-003',
+    location: 'VIP Treatment Suite',
     status: 'pending',
     priority: 'high',
     assignedTo: 'Elena Rostova',
     category: 'Power Supply',
     openedAt: '2026-06-11T07:15:00Z',
     slaDeadline: '2026-06-11T15:15:00Z',
-    description: 'Battery failing to hold charge for more than 10 minutes. Requires immediate replacement of internal cell pack and recalibration of discharge sequence.',
+    description: 'RF handpiece electrode pins showing wear and intermittent contact warning on control screen. Electrode replacement recommended.',
     progress: 15
   },
   {
     id: 'TK-1204',
-    equipment: 'Dräger Evita V500 Ventilator',
-    assetId: 'EQ-VEN-5021',
-    location: 'Intensive Care Unit - Bed 14',
+    equipment: 'Q-Switch Laser machine',
+    assetId: 'EQ-SC-001',
+    location: 'Laser Room 1',
     status: 'maintenance',
     priority: 'normal',
     assignedTo: 'Sarah Chen',
     category: 'Routine PM',
     openedAt: '2026-06-11T06:00:00Z',
     slaDeadline: '2026-06-12T06:00:00Z',
-    description: 'Scheduled 6-month preventative maintenance and filter exchange. Check oxygen sensor voltage and pressure sensors deviation.',
+    description: 'Scheduled 6-month calibration and laser output power verification. Check handpiece fiber condition and flashlamp trigger voltage.',
     progress: 75
   },
   {
     id: 'TK-4839',
-    equipment: 'Baxter Sigma Spectrum Infusion Pump',
-    assetId: 'EQ-INF-3304',
-    location: 'Pediatrics Ward - Room 204',
-    status: 'operational', // Wait, the ticket could be operational status? The prompt says StatusBadge supports: critical|warning|maintenance|pending|operational|resolved
+    equipment: 'Diode Laser machine',
+    assetId: 'EQ-SC-002',
+    location: 'Laser Room 2',
+    status: 'operational',
     priority: 'low',
     assignedTo: 'Elena Rostova',
     category: 'Software Issue',
@@ -59,44 +59,44 @@ export const mockTickets: Ticket[] = [
   },
   {
     id: 'TK-3394',
-    equipment: 'Mindray BeneVision N22 Patient Monitor',
-    assetId: 'EQ-MON-0284',
-    location: 'Cardiac Care Unit - CCU-4',
+    equipment: 'Supersonic Vitamin Infusion machine',
+    assetId: 'EQ-SC-003',
+    location: 'Skin Treatment Bed 4',
     status: 'resolved',
     priority: 'normal',
     assignedTo: 'Marcus Vance',
     category: 'Calibration',
     openedAt: '2026-06-10T09:00:00Z',
     slaDeadline: '2026-06-11T09:00:00Z',
-    description: 'ECG module reporting incorrect waveforms. Recalibrated signal amplifier and verified with simulator. Replaced lead wires.',
+    description: 'Ultrasound head transducer recalibrated. Signal amplifier output adjusted and safety limit switch verified.',
     progress: 100
   },
   {
     id: 'TK-7721',
-    equipment: 'Zoll X Series Monitor/Defibrillator',
-    assetId: 'EQ-DEF-8820',
-    location: 'Ambulance Unit 4',
+    equipment: 'HIFU 7D machine',
+    assetId: 'EQ-FC-001',
+    location: 'Facial Care Room A',
     status: 'critical',
     priority: 'critical',
     assignedTo: 'Marcus Vance',
     category: 'Hardware Failure',
     openedAt: '2026-06-11T09:45:00Z',
     slaDeadline: '2026-06-11T13:45:00Z',
-    description: 'Pacing function disabled due to internal relays failure. Defibrillator fails self-test. Red-tagged unit.',
+    description: 'High frequency transducer array output error. Calibration failed. Red-tagged unit.',
     progress: 30
   },
   {
     id: 'TK-5512',
-    equipment: 'Olympus CV-190 Endoscopy Tower',
-    assetId: 'EQ-END-4491',
-    location: 'Endoscopy Suite - Room A',
+    equipment: 'BIOLIGHT Light Therapy machine',
+    assetId: 'EQ-SC-004',
+    location: 'Therapy Room 5',
     status: 'pending',
     priority: 'high',
     assignedTo: 'Sarah Chen',
     category: 'Optical Alignment',
     openedAt: '2026-06-11T10:15:00Z',
     slaDeadline: '2026-06-11T18:15:00Z',
-    description: 'Light source flickering periodically. Video feed shows chromatic aberration. Needs fiber optic guide inspection.',
+    description: 'LED blue-light diode array failing to illuminate. Power panel driver failure. Intermittent flickering.',
     progress: 20
   }
 ] as any;
@@ -136,8 +136,17 @@ export const mockTeamMembers: TeamMember[] = [
 
 export const mockEquipment: Equipment[] = [
   {
-    id: 'EQ-MRI-8822',
-    name: 'GE Signa 3T MRI Scanner',
+    id: 'EQ-FC-001',
+    name: 'HIFU 7D machine',
+    uptime: 99.4,
+    lastService: '2026-05-10',
+    ticketCount: 1,
+    status: 'operational',
+    assignedTech: 'Elena Rostova'
+  },
+  {
+    id: 'EQ-FC-002',
+    name: 'Ultra F (Ultra HIFU) machine',
     uptime: 94.2,
     lastService: '2026-05-15',
     ticketCount: 14,
@@ -145,17 +154,17 @@ export const mockEquipment: Equipment[] = [
     assignedTech: 'Marcus Vance'
   },
   {
-    id: 'EQ-DEF-1049',
-    name: 'Philips Tempus LS Defibrillator',
-    uptime: 99.1,
+    id: 'EQ-FC-003',
+    name: 'RF 5D machine',
+    uptime: 98.1,
     lastService: '2026-06-01',
     ticketCount: 8,
     status: 'pending',
     assignedTech: 'Elena Rostova'
   },
   {
-    id: 'EQ-VEN-5021',
-    name: 'Dräger Evita V500 Ventilator',
+    id: 'EQ-SC-001',
+    name: 'Q-Switch Laser machine',
     uptime: 97.8,
     lastService: '2026-06-05',
     ticketCount: 12,
@@ -163,8 +172,8 @@ export const mockEquipment: Equipment[] = [
     assignedTech: 'Sarah Chen'
   },
   {
-    id: 'EQ-INF-3304',
-    name: 'Baxter Sigma Spectrum Infusion Pump',
+    id: 'EQ-SC-002',
+    name: 'Diode Laser machine',
     uptime: 99.6,
     lastService: '2026-05-20',
     ticketCount: 3,
@@ -172,11 +181,29 @@ export const mockEquipment: Equipment[] = [
     assignedTech: 'Elena Rostova'
   },
   {
-    id: 'EQ-MON-0284',
-    name: 'Mindray BeneVision N22 Patient Monitor',
+    id: 'EQ-SC-003',
+    name: 'Supersonic Vitamin Infusion machine',
     uptime: 98.9,
     lastService: '2026-06-09',
     ticketCount: 5,
+    status: 'operational',
+    assignedTech: 'Marcus Vance'
+  },
+  {
+    id: 'EQ-SC-004',
+    name: 'BIOLIGHT Light Therapy machine',
+    uptime: 99.7,
+    lastService: '2026-06-02',
+    ticketCount: 1,
+    status: 'operational',
+    assignedTech: 'Sarah Chen'
+  },
+  {
+    id: 'EQ-BF-001',
+    name: 'G5 Fat Reduction Massage machine',
+    uptime: 98.0,
+    lastService: '2026-05-25',
+    ticketCount: 0,
     status: 'operational',
     assignedTech: 'Marcus Vance'
   }
