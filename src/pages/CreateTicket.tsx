@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Topbar } from '../components/layout/Topbar';
 import { PrioritySelector } from '../components/forms/PrioritySelector';
+import { AssetSelector } from '../components/forms/AssetSelector';
 import { useAppStore } from '../store/useAppStore';
 import type { TicketPriority } from '../types';
+
 
 export const CreateTicket: React.FC = () => {
   const navigate = useNavigate();
@@ -28,11 +30,14 @@ export const CreateTicket: React.FC = () => {
         setAssetId(eq.id);
         // Find a matching ticket location or set general location based on name
         const locationMap: Record<string, string> = {
-          'EQ-MRI-8822': 'Imaging Center - Room 3',
-          'EQ-DEF-1049': 'Emergency Department - ER-B',
-          'EQ-VEN-5021': 'Intensive Care Unit - Bed 14',
-          'EQ-INF-3304': 'Pediatrics Ward - Room 204',
-          'EQ-MON-0284': 'Cardiac Care Unit - CCU-4',
+          'EQ-FC-001': 'Facial Care Room A',
+          'EQ-FC-002': 'Therapy Room 3',
+          'EQ-FC-003': 'VIP Treatment Suite',
+          'EQ-SC-001': 'Laser Room 1',
+          'EQ-SC-002': 'Laser Room 2',
+          'EQ-SC-003': 'Skin Treatment Bed 4',
+          'EQ-SC-004': 'Therapy Room 5',
+          'EQ-BF-001': 'Body Contouring Room B',
         };
         setLocation(locationMap[eq.id] || 'General Ward');
       }
@@ -103,20 +108,12 @@ export const CreateTicket: React.FC = () => {
                 >
                   Select Asset
                 </label>
-                <select
-                  id="equipment-select"
+                <AssetSelector
+                  equipment={equipment}
+                  selectedEqId={selectedEqId}
+                  onSelectEqId={setSelectedEqId}
                   required
-                  className="w-full h-[38px] px-3 border border-border-custom rounded-[6px] text-[14px] text-text-primary bg-bg focus:outline-none focus:border-primary"
-                  value={selectedEqId}
-                  onChange={(e) => setSelectedEqId(e.target.value)}
-                >
-                  <option value="">-- Choose Equipment --</option>
-                  {equipment.map((eq) => (
-                    <option key={eq.id} value={eq.id}>
-                      {eq.name} ({eq.id})
-                    </option>
-                  ))}
-                </select>
+                />
               </div>
 
               <div>

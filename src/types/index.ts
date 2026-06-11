@@ -6,6 +6,7 @@ export * from './asset';
 export * from './workorder';
 export * from './notification';
 export * from './report';
+export * from './pm';
 
 // Backwards compatibility mappings for smooth migration
 export type TicketStatus = WorkOrderStatus | 'critical' | 'pending' | 'maintenance' | 'operational' | 'resolved';

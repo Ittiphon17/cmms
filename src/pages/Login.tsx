@@ -3,15 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../store/useAppStore';
 
 export const Login: React.FC = () => {
-  const [email, setEmail] = useState('m.vance@saintjude.org');
-  const [password, setPassword] = useState('••••••••');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const login = useAppStore((state) => state.login);
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    login();
-    navigate('/dashboard');
+    if (email === 'user' && password === '1') {
+      setError(null);
+      login();
+      navigate('/dashboard');
+    } else {
+      setError('Incorrect Email or Password.');
+    }
   };
 
   return (
@@ -37,22 +43,28 @@ export const Login: React.FC = () => {
           Sign In
         </h2>
 
+        {error && (
+          <div className="mb-4 p-3 bg-critical-bg text-critical-text border border-critical/20 rounded-[6px] text-[12.5px] leading-snug">
+            {error}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label 
               htmlFor="email" 
               className="block text-[11px] font-semibold text-text-secondary tracking-[0.5px] uppercase mb-1.5"
             >
-              Email Address
+              Email
             </label>
             <input
               id="email"
-              type="email"
+              type="text"
               required
               className="w-full h-[38px] px-3 border border-border-custom rounded-[6px] text-[14px] text-text-primary focus:outline-none focus:border-primary placeholder-text-hint bg-bg"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="e.g. biomed@hospital.org"
+              placeholder="(ในที่นี้ใส่ user ได้เลย)"
             />
           </div>
 
@@ -70,7 +82,7 @@ export const Login: React.FC = () => {
               className="w-full h-[38px] px-3 border border-border-custom rounded-[6px] text-[14px] text-text-primary focus:outline-none focus:border-primary placeholder-text-hint bg-bg"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter password"
+              placeholder="(ในที่นี้ใส่ 1 ได้เลย)"
             />
           </div>
 
@@ -88,10 +100,7 @@ export const Login: React.FC = () => {
       {/* Version and Compliance note */}
       <div className="mt-5 text-center max-w-[340px]">
         <p className="text-[11px] text-text-secondary leading-normal m-0">
-          CareFlow CMMS v1.4.2
-        </p>
-        <p className="text-[11px] text-text-hint leading-normal m-0 mt-0.5">
-          FDA Title 21 CFR Part 11 Compliant Electronic Records System. Authorized clinical maintenance engineering access only.
+          CareFlow CMMS v1.0.1
         </p>
       </div>
     </div>

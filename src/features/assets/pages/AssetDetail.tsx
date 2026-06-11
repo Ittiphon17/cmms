@@ -70,7 +70,7 @@ export const AssetDetail: React.FC = () => {
                 <span>Asset Technical Specifications</span>
               </h3>
 
-              <div className="grid grid-cols-2 gap-y-4 gap-x-6 text-[14px]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 text-[14px]">
                 <div>
                   <div className="text-[11px] font-semibold text-text-secondary tracking-[0.5px] uppercase mb-0.5">
                     Manufacturer

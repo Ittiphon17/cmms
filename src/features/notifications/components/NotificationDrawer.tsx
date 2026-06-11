@@ -42,7 +42,7 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({ isOpen, 
     <div className="fixed inset-0 z-50 bg-black/35 backdrop-blur-[1px] flex justify-end animate-fade-in">
       <div 
         ref={drawerRef}
-        className="w-[380px] h-full bg-surface border-l border-border-custom shadow-2xl flex flex-col justify-between animate-slide-left"
+        className="w-full max-w-[380px] h-full bg-surface border-l border-border-custom shadow-2xl flex flex-col justify-between animate-slide-left"
         role="dialog"
         aria-modal="true"
         aria-label="Notification Center"

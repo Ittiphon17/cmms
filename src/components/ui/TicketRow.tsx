@@ -40,7 +40,7 @@ export const TicketRow: React.FC<TicketRowProps> = ({ id, equipment, status, onC
         <span className="text-[12px] font-semibold text-primary bg-primary-light px-2 py-0.5 rounded-[4px] border border-primary/10">
           {id}
         </span>
-        <span className="text-[14px] font-medium text-text-primary truncate max-w-[280px] md:max-w-[450px]">
+        <span className="text-[14px] font-medium text-text-primary truncate max-w-[130px] sm:max-w-[280px] md:max-w-[450px]">
           {equipment}
         </span>
       </div>
