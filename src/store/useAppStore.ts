@@ -56,7 +56,7 @@ export const useAppStore = create<AppStore>((set) => {
   const initialAssets = getStoredAssets();
 
   return {
-    isAuthenticated: true,
+    isAuthenticated: localStorage.getItem('cf_authenticated') === 'true',
     userRole: 'admin', // default for easy testing of RBAC features
     tickets: initialTickets,
     teamMembers: mockTeamMembers,
@@ -64,8 +64,14 @@ export const useAppStore = create<AppStore>((set) => {
     timeline: buildTimelineMap(initialTickets),
     checklists: buildChecklistsMap(initialTickets),
 
-    login: () => set({ isAuthenticated: true }),
-    logout: () => set({ isAuthenticated: false }),
+    login: () => {
+      localStorage.setItem('cf_authenticated', 'true');
+      set({ isAuthenticated: true });
+    },
+    logout: () => {
+      localStorage.removeItem('cf_authenticated');
+      set({ isAuthenticated: false });
+    },
     setUserRole: (role) => set({ userRole: role }),
 
     refreshFromStorage: () => {
