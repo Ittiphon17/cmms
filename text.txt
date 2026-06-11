@@ -1,0 +1,4 @@
+เปิด DevTools (F12) แล้วพิมพ์ใน Console เพื่อเคลียร์ข้อมูล:
+
+localStorage.clear();
+location.reload();
